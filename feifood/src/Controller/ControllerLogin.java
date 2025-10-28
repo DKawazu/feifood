@@ -32,4 +32,8 @@ public class ControllerLogin implements ActionListener {
             JOptionPane.showMessageDialog(null, "Credenciais inválidas.");
         }
     }
+    
+    public boolean cadastrar(String nome, String email, String senha) {
+        return Usuario.cadastrar(nome, email, senha);
+    }
 }
