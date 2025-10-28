@@ -26,29 +26,22 @@ public class Pedido {
     public List<ItemPedido> getItens() { return itens; }
     public void setItens(List<ItemPedido> itens) { this.itens = itens; }
 
-    public static boolean criarPedido(int usuarioId, List<ItemPedido> itens) {
-        try (Connection conn = Conexao.conectar()) {
-            String sql = "INSERT INTO pedido (usuario_id) VALUES (?) RETURNING id";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, usuarioId);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                int pedidoId = rs.getInt("id");
-
-                for (ItemPedido item : itens) {
-                    sql = "INSERT INTO item_pedido (pedido_id, alimento_id, quantidade) VALUES (?, ?, ?)";
-                    stmt = conn.prepareStatement(sql);
-                    stmt.setInt(1, pedidoId);
-                    stmt.setInt(2, item.getAlimentoId());
-                    stmt.setInt(3, item.getQuantidade());
-                    stmt.executeUpdate();
-                }
-                return true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public static boolean criarPedido(int usuarioId, int alimentoId, int quantidade) {
+    try (Connection conn = Conexao.conectar()) {
+        String sql = "INSERT INTO pedido (usuario_id, alimento_id, quantidade) VALUES (?, ?, ?) RETURNING id";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setInt(1, usuarioId);  
+        stmt.setInt(2, alimentoId); 
+        stmt.setInt(3, quantidade);
+        ResultSet rs = stmt.executeQuery();
+        
+        if (rs.next()) {
+            return true;
         }
-        return false;
+    } catch (SQLException e) {
+        e.printStackTrace(); 
     }
+    return false;
+}
 }
 
