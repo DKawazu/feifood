@@ -18,6 +18,7 @@ public class TelaCadastro extends javax.swing.JFrame {
      */
     public TelaCadastro() {
         initComponents();
+        setSize(520, 522);
     }
 
     /**
