@@ -4,6 +4,7 @@
  */
 package Controller;
 import Model.Usuario;
+import View.TelaMenu;
 import javax.swing.*;
 import java.awt.event.*;
 /**
@@ -28,9 +29,12 @@ public class ControllerLogin implements ActionListener {
         String senha = new String(txtSenha.getPassword());
         if (Usuario.autenticar(email, senha)) {
             JOptionPane.showMessageDialog(null, "Login bem-sucedido!");
+            new TelaMenu().setVisible(true); // abre o menu
+            SwingUtilities.getWindowAncestor(txtEmail).dispose(); // fecha a tela atual
         } else {
             JOptionPane.showMessageDialog(null, "Credenciais inválidas.");
-        }
+}
+
     }
     
     public boolean cadastrar(String nome, String email, String senha) {
